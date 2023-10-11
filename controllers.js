@@ -1,9 +1,11 @@
-
 const pressRelease=require('./models/pressRelease')
+
+const authenticateJWT=require('./middlewares/jwtAuth')
+
 
 exports.getAllPR=async (req,res)=>{
     try{
-        const result=await pressRelease.findAll();
+        const result=await pressRelease.fetchAll();
 
         res.json(result)
     }
@@ -13,16 +15,16 @@ exports.getAllPR=async (req,res)=>{
 }
 
 exports.postNewPR=async (req,res)=>{
+
+    const pressReleaseData={
+        title:req.body.title,
+        date:req.body.date,
+        description:req.body.description
+    }
     try{
-     const Title=req.body.Title
-     const Date=req.body.Date
-     const Description=req.body.Description
+     
  
-     const result=await pressRelease.create({
-         Title:Title,
-         Date:Date,
-         Description:Description
-     })
+     const result=await pressRelease.newPr(pressReleaseData)
  
      res.json({status:"success",msg:{result}})
     }
@@ -35,7 +37,7 @@ exports.postNewPR=async (req,res)=>{
 
  exports.postRelease=async (req,res)=>{
     try{
-        const update=await pressRelease.update({status:1},{where:{id:req.params.prId}});
+        const update=await pressRelease.releasePr(req.params.prId);
     
          res.send(update)
     }
@@ -47,7 +49,7 @@ exports.postNewPR=async (req,res)=>{
 
 exports.deletePR=async(req,res)=>{
     try{
-        const deleted=await pressRelease.destroy({where:{id:req.params.prId}});
+        const deleted=await pressRelease.delete(req.params.prId);
         res.send("successfully deleted")
 
     }
