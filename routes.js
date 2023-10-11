@@ -4,7 +4,7 @@ const router=express.Router()
 
 const authenticateJWT=require('./middlewares/jwtAuth')
 
-const {check,validateResult}=require('express-validator')
+const {check,validationResult}=require('express-validator')
 
 
 const controllers=require('./controllers')

@@ -2,6 +2,8 @@ const pressRelease=require('./models/pressRelease')
 
 const authenticateJWT=require('./middlewares/jwtAuth')
 
+const {check,validationResult}=require('express-validator')
+
 
 exports.getAllPR=async (req,res)=>{
     try{
@@ -15,6 +17,13 @@ exports.getAllPR=async (req,res)=>{
 }
 
 exports.postNewPR=async (req,res)=>{
+
+    const error=validationResult(req)
+
+    if(!error.isEmpty())
+    {
+        return res.json({msg:error})
+    }
 
     const pressReleaseData={
         title:req.body.title,
