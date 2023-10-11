@@ -1,4 +1,3 @@
-
 require('dotenv').config()
 
 const authenticateJWT = (req, res, next) => {
@@ -17,5 +16,5 @@ const authenticateJWT = (req, res, next) => {
     });
   };
 
-  module.exports=authenticateJWT
+module.exports=authenticateJWT
   
